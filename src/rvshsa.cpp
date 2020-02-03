@@ -51,6 +51,7 @@ void rvs::hsa::Init() {
   if (pDsc == nullptr) {
     pDsc = new rvs::hsa();
     pDsc->InitAgents();
+
   }
 }
 
@@ -339,6 +340,8 @@ void rvs::hsa::InitAgents() {
   }
 
   std::sort(size_list.begin(), size_list.end());
+
+  PrintTopology();
 }
 
 /**
@@ -1070,3 +1073,21 @@ int rvs::hsa::GetLinkInfo(uint32_t SrcNode, uint32_t DstNode,
   RVSHSATRACE_
   return 0;
 }
+
+void rvs::hsa::PrintTopology() {
+  hsa_status_t status;
+  string log_msg;
+
+  std::cout <<"\n \t \t Discovered Nodes \n";
+  std::cout << "      ============================================== \n \n ";
+
+  std::cout << std::left << std::setw(80) << "     Node Name " << std::setw(20) <<  " Node Type  " << "\n";
+  std::cout << "==============================================================================================";
+
+  RVSHSATRACE_
+  for (uint32_t i = 0; i < agent_list.size(); i++) {
+     std::cout << "\n " << std::left << std::setw(80) << agent_list[i].agent_name <<  std::setw(20) << agent_list[i].agent_device_type << std::setw(10) << agent_list[i].node << "\n";
+  }
+  std::cout << "============================================================================================== \n";
+}
+
