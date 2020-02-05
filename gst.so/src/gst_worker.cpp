@@ -494,9 +494,9 @@ void GSTWorker::run() {
         msg = "[" + action_name + "] " + MODULE_NAME + " " +
                 std::to_string(gpu_id) + " " + GST_TARGET_ACHIEVED_MSG + " " +
                 std::to_string(target_stress);
-        rvs::lp::Log(msg, rvs::logresults);
+        rvs::lp::Log(msg, rvs::loginfo);
         log_to_json(GST_TARGET_ACHIEVED_MSG, std::to_string(target_stress),
-                    rvs::logresults);
+                    rvs::loginfo);
         if (run_duration_ms > 0) {
             gst_test_passed = do_gst_stress_test(&error, &err_description);
             // check if stop signal was received
