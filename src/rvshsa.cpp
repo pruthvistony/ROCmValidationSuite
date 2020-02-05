@@ -566,8 +566,21 @@ double rvs::hsa::GetCopyTime(bool bidirectional,
                    status);
   double start = std::min(async_time_fwd.start, async_time_rev.start);
   double end = std::max(async_time_fwd.end, async_time_rev.end);
+  double copy_time = end - start;
+
+  // Forward copy completed before Reverse began
+  if (async_time_fwd.end < async_time_rev.start) {
+    return (copy_time - (async_time_rev.start - async_time_fwd.end));
+  }
+
+  // Reverse copy completed before Forward began
+  if (async_time_rev.end < async_time_fwd.start) {
+    return (copy_time - (async_time_fwd.start - async_time_rev.end));
+  }
+
   RVSHSATRACE_
-  return(end - start);
+  // Forward and Reverse copies overlapped
+  return copy_time;
 }
 
 /**
